@@ -16,8 +16,60 @@ public class Cart {
     @JoinColumn(name = "id")
 private Customer customer;
 
-     @Column(name = "product")
-    private List<Product> product;
+     @ManyToMany
+   @JoinTable(
+           name = "cart_product",
+           joinColumns = @JoinColumn(name = "cart_id"
+           ),inverseJoinColumns =@JoinColumn(name = "product_id")
+   )
+    private List<Product> products;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart cart = (Cart) o;
+        return Objects.equals(id, cart.id) && Objects.equals(customer, cart.customer) && Objects.equals(products, cart.products);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, customer, products);
+    }
+public void addProductToCart(Product product){
+        products.add(product);
+}
 
 
+
+
+
+    @Override
+    public String toString() {
+  return String.format("Cart: id = %d, Customer = %s, Products = %d",
+          id, products ==null?0: products.size());
+    }
 }

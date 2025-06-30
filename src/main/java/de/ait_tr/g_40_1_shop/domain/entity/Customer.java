@@ -20,7 +20,7 @@ public class Customer {
     @Column(name = "active")
     private boolean active;
 
-    @OneToOne
+    @OneToOne(mappedBy = "customer",cascade = CascadeType.ALL)
     private Cart cart;
 
     @Column(name = "active")
@@ -68,9 +68,15 @@ public class Customer {
         return Objects.hash(id, name, active, cart);
     }
 
+
+
+
+
+
+
     @Override
-    public String toString() {
-        return String.format("Customer: id- %d, name - %s, active - %s, catd - %s"
-                , id, name, active ? "Yes" : "No", cart == null ? "ERROR" : cart);
-    }
+   public String toString() {
+      return String.format("Customer: id- %d, name - %s, active - %s, catd - %s"
+               , id, name, active ? "Yes" : "No", cart == null ? "ERROR" : cart);
+   }
 }

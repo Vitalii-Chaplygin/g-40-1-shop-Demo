@@ -1,5 +1,6 @@
 package de.ait_tr.g_40_1_shop.service.interfaces;
 
+import de.ait_tr.g_40_1_shop.domain.dto.ProductDto;
 import de.ait_tr.g_40_1_shop.domain.entity.Product;
 
 import java.math.BigDecimal;
@@ -7,13 +8,13 @@ import java.util.List;
 
 public interface ProductService {
 
-    Product save(Product product);
+    ProductDto save(ProductDto product);
 
-    List<Product> getAllIActiveProducts();
+    List<ProductDto> getAllIActiveProducts();
 
-    Product getProductById(Long id);
+    ProductDto getProductById(Long id);
 
-    Product update(Product product);
+    ProductDto update(ProductDto product);
 
     void deleteById(Long id);
 

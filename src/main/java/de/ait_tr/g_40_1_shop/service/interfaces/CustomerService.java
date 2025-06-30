@@ -25,16 +25,16 @@ import java.util.List;
 public interface CustomerService {
 
     Customer save(Customer customer);
-    List<Customer> getAllActiveCustomer();
+    List<Customer> getAllActiveCustomers();
     Customer getActiveCustomerById(Long customerId);
     Customer updateById(Long customerId);
     void deleteById(Long customerId);
     void deleteByName(String name);
     Customer restoreByid(Long customerId);
-    int getCountAllActiveCustomer(List<Customer> customers);
-    BigDecimal getAlLPriceCardActiveCustomer (Customer customer);
+    long getCountAllActiveCustomer();
+    BigDecimal getAlLPriceCardActiveCustomer (Long customerId);
     BigDecimal getAveragePriceActiveCustomerById(Long customerId);
-    void addActiveProductToActiveCardById(Long customerId,Long cardId);
-    void delProductFromCardById(Long productId,Long cardId);
+    void addActiveProductToActiveCardById(Long customerId,Long productId);
+    void delProductFromCardById(Long productId,Long productdId);
     void  delAllProductFromCardById(Long customerId);
 }

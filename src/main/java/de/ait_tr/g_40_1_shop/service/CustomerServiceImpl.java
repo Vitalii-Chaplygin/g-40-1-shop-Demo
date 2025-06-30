@@ -14,7 +14,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> getAllActiveCustomer() {
+    public List<Customer> getAllActiveCustomers() {
         return List.of();
     }
 
@@ -44,12 +44,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public int getCountAllActiveCustomer(List<Customer> customers) {
+    public long getCountAllActiveCustomer() {
         return 0;
     }
 
     @Override
-    public BigDecimal getAlLPriceCardActiveCustomer(Customer customer) {
+    public BigDecimal getAlLPriceCardActiveCustomer(Long customerId) {
         return null;
     }
 
@@ -59,12 +59,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void addActiveProductToActiveCardById(Long customerId, Long cardId) {
+    public void addActiveProductToActiveCardById(Long customerId, Long productId) {
 
     }
 
     @Override
-    public void delProductFromCardById(Long productId, Long cardId) {
+    public void delProductFromCardById(Long productId, Long productdId) {
 
     }
 
