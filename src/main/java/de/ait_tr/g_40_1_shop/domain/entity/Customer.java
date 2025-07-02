@@ -68,12 +68,6 @@ public class Customer {
         return Objects.hash(id, name, active, cart);
     }
 
-
-
-
-
-
-
     @Override
    public String toString() {
       return String.format("Customer: id- %d, name - %s, active - %s, catd - %s"
