@@ -2,6 +2,9 @@ package de.ait_tr.g_40_1_shop.domain.entity;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,14 +17,14 @@ public class Cart {
 
     @OneToOne
     @JoinColumn(name = "id")
-private Customer customer;
+    private Customer customer;
 
-     @ManyToMany
-   @JoinTable(
-           name = "cart_product",
-           joinColumns = @JoinColumn(name = "cart_id"
-           ),inverseJoinColumns =@JoinColumn(name = "product_id")
-   )
+    @ManyToMany
+    @JoinTable(
+            name = "cart_product",
+            joinColumns = @JoinColumn(name = "cart_id"
+            ), inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<Product> products;
 
     public Customer getCustomer() {
@@ -59,17 +62,56 @@ private Customer customer;
     public int hashCode() {
         return Objects.hash(id, customer, products);
     }
-public void addProductToCart(Product product){
-        products.add(product);
-}
+
+    public void addActiveProductToCart(Product product) {
+        if (product.isActive()) {
+            products.add(product);
+        }
+    }
+
+    public List<Product> getAllActiveProducts() {
+        return products.stream()
+                .filter(product -> product.isActive())
+                .toList();
+    }
+
+    public void deleteProductFromCartById(Long id) {
+        Iterator<Product> iterator = products.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().equals(id)) {
+                iterator.remove();
+                break;
+            }
+        }
+    }
+
+    public void clearAllProduct() {
+        products.clear();
+    }
+
+    public BigDecimal getTotalCost() {
+      return   products.stream()
+                .filter(Product::isActive)
+                .map(Product::getPrice)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
 
 
+    }
+    public BigDecimal getAverageProductCost() {
+        long count = products.stream()
+                .filter(Product::isActive)
+                .count();
 
+        return count == 0 ?
+                BigDecimal.ZERO :
+                getTotalCost().divide(new BigDecimal(count), RoundingMode.DOWN);
+    }
 
 
     @Override
     public String toString() {
-  return String.format("Cart: id = %d, Customer = %s, Products = %d",
-          id, products ==null?0: products.size());
+        return String.format("Cart: id = %d, Customer = %s, Products = %d",
+                id, products == null ? 0 : products.size());
     }
 }

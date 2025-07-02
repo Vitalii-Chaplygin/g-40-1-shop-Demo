@@ -1,6 +1,6 @@
 package de.ait_tr.g_40_1_shop.service.interfaces;
 
-import de.ait_tr.g_40_1_shop.domain.entity.Customer;
+import de.ait_tr.g_40_1_shop.domain.dto.CustomerDto;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,17 +24,18 @@ import java.util.List;
  */
 public interface CustomerService {
 
-    Customer save(Customer customer);
-    List<Customer> getAllActiveCustomers();
-    Customer getActiveCustomerById(Long customerId);
-    Customer updateById(Long customerId);
+    CustomerDto save(CustomerDto customerDto);
+
+    List<CustomerDto> getAllActiveCustomers();
+    CustomerDto getActiveCustomerById(Long customerId);
+    CustomerDto update(CustomerDto customerDto);
     void deleteById(Long customerId);
     void deleteByName(String name);
-    Customer restoreByid(Long customerId);
+    CustomerDto restoreByid(Long customerId);
     long getCountAllActiveCustomer();
     BigDecimal getAlLPriceCardActiveCustomer (Long customerId);
     BigDecimal getAveragePriceActiveCustomerById(Long customerId);
     void addActiveProductToActiveCardById(Long customerId,Long productId);
-    void delProductFromCardById(Long productId,Long productdId);
+    void delProductFromCardById(Long productId,Long cartId);
     void  delAllProductFromCardById(Long customerId);
 }

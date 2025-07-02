@@ -1,8 +1,6 @@
 package de.ait_tr.g_40_1_shop.domain.dto;
 
-import de.ait_tr.g_40_1_shop.domain.entity.Customer;
 import de.ait_tr.g_40_1_shop.domain.entity.Product;
-import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Objects;
