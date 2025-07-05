@@ -24,15 +24,14 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductDto> getProduct(@RequestParam(required = false) Long id) {
-        if (id == null) {
-            return productService.getAllIActiveProducts();
-        } else {
-            ProductDto product = productService.getProductById(id);
-            return product == null ? null : List.of(product);
-        }
+    public ProductDto getById(@RequestParam Long id) {
+        return productService.getProductById(id);
 
+    }
 
+    @GetMapping("/all")
+    public List<ProductDto> getAll() {
+        return productService.getAllIActiveProducts();
     }
 
     @PutMapping
