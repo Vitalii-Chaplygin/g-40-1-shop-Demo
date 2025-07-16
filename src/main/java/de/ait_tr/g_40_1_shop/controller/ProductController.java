@@ -2,7 +2,6 @@ package de.ait_tr.g_40_1_shop.controller;
 
 
 import de.ait_tr.g_40_1_shop.domain.dto.ProductDto;
-import de.ait_tr.g_40_1_shop.domain.entity.Product;
 import de.ait_tr.g_40_1_shop.service.interfaces.ProductService;
 import org.springframework.web.bind.annotation.*;
 
