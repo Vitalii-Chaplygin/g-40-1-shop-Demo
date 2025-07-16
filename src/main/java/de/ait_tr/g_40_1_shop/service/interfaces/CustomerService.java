@@ -36,6 +36,6 @@ public interface CustomerService {
     BigDecimal getAlLPriceCardActiveCustomer (Long customerId);
     BigDecimal getAveragePriceActiveCustomerById(Long customerId);
     void addActiveProductToActiveCardById(Long customerId,Long productId);
-    void delProductFromCardById(Long productId,Long cartId);
+    void delProductFromCardById(Long customerId,Long productId);
     void  delAllProductFromCardById(Long customerId);
 }

@@ -144,9 +144,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void delProductFromCardById(Long productId, Long CartId) {
-
-
+    public void delProductFromCardById(Long customerId, Long productId) {
+    Customer customer = customerRepository.findById(customerId).orElseThrow(()->new RuntimeException("Customer not found with id: " + customerId));
+    Cart cart = customer.getCart();
+    cart.deleteProductFromCartById(productId);
     }
 
     @Override

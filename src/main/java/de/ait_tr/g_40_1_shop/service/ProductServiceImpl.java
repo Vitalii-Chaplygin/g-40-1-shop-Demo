@@ -5,6 +5,8 @@ import de.ait_tr.g_40_1_shop.domain.entity.Product;
 import de.ait_tr.g_40_1_shop.repository.ProductRepository;
 import de.ait_tr.g_40_1_shop.service.interfaces.ProductService;
 import de.ait_tr.g_40_1_shop.service.mapping.ProductMappingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,6 +14,10 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+    private Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
+
+
+
     private final ProductRepository productRepository;
     private final ProductMappingService productMappingService;
 
@@ -35,8 +41,25 @@ public class ProductServiceImpl implements ProductService {
                 .toList();
     }
 
+//    @Override
+//    public ProductDto getProductById(Long id) {
+//        logger.info("method getProductById called with parameter {}",id);
+//        logger.warn("method getProductById called with parameter {}",id);
+//        logger.error("method getProductById called with parameter {}",id);
+//
+//
+//        Product product = productRepository.findById(id).orElse(null);//Optional
+//        if (product == null || !product.isActive()) {
+//            return null;
+//        }
+//        ProductDto dto = productMappingService.mapEntityToDto(product);
+//        return dto;
+//    }
+//
+
     @Override
     public ProductDto getProductById(Long id) {
+
         Product product = productRepository.findById(id).orElse(null);//Optional
         if (product == null || !product.isActive()) {
             return null;
@@ -44,15 +67,20 @@ public class ProductServiceImpl implements ProductService {
         ProductDto dto = productMappingService.mapEntityToDto(product);
         return dto;
     }
-
     @Override
     public ProductDto update(ProductDto product) {
-        return null;
+        Product entity = productMappingService.mapDtoToEntity(product);
+        entity.setTitle(product.getTitle());
+        entity.setPrice(product.getPrice());
+        productRepository.save(entity);
+       return productMappingService.mapEntityToDto(entity);
+
+
     }
 
     @Override
     public void deleteById(Long id) {
-
+        productRepository.deleteById(id);
     }
 
     @Override
@@ -67,12 +95,24 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public long getActiveProductQuantity() {
-        return 0;
+        List<Product> productList= productRepository.findAll();
+        long count = productList.stream()
+                .filter(Product::isActive)
+                .count();
+        return count;
+       
     }
 
     @Override
     public BigDecimal getActiveProductTotalPrice() {
-        return null;
+        List<Product> productList= productRepository.findAll();
+        return productList.stream()
+                .filter(p->p.isActive())
+                .map(Product::getPrice)
+                .reduce(BigDecimal.ZERO,BigDecimal::add);
+        
+        
+        
     }
 
     @Override
