@@ -26,13 +26,13 @@ public class TokenFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-String token  = getTokenFromRequest((HttpServletRequest) servletRequest);
-if (token!=null&& tokenService.validateAccesToken(token)){
-    Claims claims = tokenService.getAccessClaims(token);
-    AuthInfo authInfo = tokenService.mapClaimsToAuthInfo(claims);
-    authInfo.setAuthenticated(true);
-    SecurityContextHolder.getContext().setAuthentication(authInfo);
-}
+        String token = getTokenFromRequest((HttpServletRequest) servletRequest);
+        if (token != null && tokenService.validateAccesToken(token)) {
+            Claims claims = tokenService.getAccessClaims(token);
+            AuthInfo authInfo = tokenService.mapClaimsToAuthInfo(claims);
+            authInfo.setAuthenticated(true);
+            SecurityContextHolder.getContext().setAuthentication(authInfo);
+        }
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
@@ -43,6 +43,7 @@ if (token!=null&& tokenService.validateAccesToken(token)){
         // Задача его вырезать из строки
         if (token != null && token.startsWith("Bearer ")) {
             return token.substring(7);
-        }return null;
+        }
+        return null;
     }
 }
